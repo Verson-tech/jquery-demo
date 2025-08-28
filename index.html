@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML, CSS, JavaScript & jQuery Example</title>
+
+    <!-- CSS Styles -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .button-group {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      button {
+        background: #4caf50;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .content-box {
+        background: #f9f9f9;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        transition: all 0.3s ease;
+      }
+
+      .content-box.highlight {
+        background: #fff3cd;
+        border-color: #ffeaa7;
+        transform: scale(1.02);
+      }
+
+      .input-section {
+        margin: 20px 0;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        width: 200px;
+        margin-right: 10px;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .item-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .item-list li {
+        background: #e8f4fd;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 5px;
+        border-left: 4px solid #2196f3;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .item-list li:hover {
+        background: #d1ecf1;
+        transform: translateX(10px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Interactive Web Page Demo</h1>
+
+      <!-- HTML Structure -->
+      <div class="content-box" id="welcome-box">
+        <h2>Welcome!</h2>
+        <p>
+          This page demonstrates HTML, CSS, JavaScript, and jQuery working
+          together.
+        </p>
+        <p id="current-time">Current time will appear here</p>
+      </div>
+
+      <!-- Button interactions -->
+      <div class="button-group">
+        <button id="change-color-btn">Change Colors</button>
+        <button id="toggle-box-btn">Toggle Box</button>
+        <button id="add-content-btn">Add Content</button>
+        <button id="show-alert-btn">Show Alert</button>
+      </div>
+
+      <!-- Dynamic content area -->
+      <div class="content-box hidden" id="dynamic-box">
+        <h3>Dynamic Content</h3>
+        <p>This box was shown using jQuery!</p>
+      </div>
+
+      <!-- Input section -->
+      <div class="input-section">
+        <h3>Interactive List</h3>
+        <input type="text" id="item-input" placeholder="Enter an item..." />
+        <button id="add-item-btn">Add Item</button>
+        <ul class="item-list" id="item-list"></ul>
+      </div>
+
+      <!-- Counter section -->
+      <div class="content-box">
+        <h3>Click Counter</h3>
+        <p>Button clicked <span id="click-count">0</span> times</p>
+        <button id="counter-btn">Click Me!</button>
+        <button id="reset-btn">Reset</button>
+      </div>
+    </div>
+
+    <!-- jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- JavaScript & jQuery Code -->
+    <script>
+      // Vanilla JavaScript - Update time
+      function updateTime() {
+        const now = new Date();
+        document.getElementById("current-time").textContent =
+          "Current time: " + now.toLocaleTimeString();
+      }
+
+      // Update time every second
+      setInterval(updateTime, 1000);
+      updateTime(); // Initial call
+
+      // jQuery - Wait for document to be ready
+      $(document).ready(function () {
+        let clickCount = 0;
+        const colors = ["#4CAF50", "#2196F3", "#FF9800", "#9C27B0", "#F44336"];
+        let colorIndex = 0;
+
+        // Change button colors
+        $("#change-color-btn").click(function () {
+          colorIndex = (colorIndex + 1) % colors.length;
+          $("button").css("background-color", colors[colorIndex]);
+
+          // jQuery animation
+          $(this)
+            .animate(
+              {
+                fontSize: "18px",
+              },
+              200
+            )
+            .animate(
+              {
+                fontSize: "16px",
+              },
+              200
+            );
+        });
+
+        // Toggle box visibility with jQuery effects
+        $("#toggle-box-btn").click(function () {
+          $("#dynamic-box").slideToggle(500);
+        });
+
+        // Add content dynamically
+        $("#add-content-btn").click(function () {
+          const newContent = $(
+            '<div class="content-box fade-in">' +
+              "<h3>New Content Added!</h3>" +
+              "<p>This was added at " +
+              new Date().toLocaleTimeString() +
+              "</p>" +
+              '<button class="remove-btn">Remove This</button>' +
+              "</div>"
+          );
+
+          $(".container").append(newContent);
+
+          // Add click handler for remove button
+          newContent.find(".remove-btn").click(function () {
+            newContent.fadeOut(500, function () {
+              newContent.remove();
+            });
+          });
+        });
+
+        // Show alert (Vanilla JS)
+        $("#show-alert-btn").click(function () {
+          alert("Hello from JavaScript! This combines vanilla JS and jQuery.");
+        });
+
+        // Counter functionality
+        $("#counter-btn").click(function () {
+          clickCount++;
+          $("#click-count").text(clickCount);
+
+          // Add highlight effect
+          $("#click-count")
+            .addClass("highlight")
+            .delay(300)
+            .queue(function (next) {
+              $(this).removeClass("highlight");
+              next();
+            });
+        });
+
+        // Reset counter
+        $("#reset-btn").click(function () {
+          clickCount = 0;
+          $("#click-count").text(clickCount);
+        });
+
+        // Add items to list
+        $("#add-item-btn").click(function () {
+          const itemText = $("#item-input").val().trim();
+          if (itemText) {
+            const listItem = $("<li>" + itemText + "</li>");
+            $("#item-list").append(listItem);
+            $("#item-input").val(""); // Clear input
+
+            // Add click handler to remove item
+            listItem.click(function () {
+              $(this).fadeOut(300, function () {
+                $(this).remove();
+              });
+            });
+          }
+        });
+
+        // Allow Enter key to add items
+        $("#item-input").keypress(function (e) {
+          if (e.which === 13) {
+            // Enter key
+            $("#add-item-btn").click();
+          }
+        });
+
+        // Hover effects for content boxes
+        $(".content-box").hover(
+          function () {
+            $(this).addClass("highlight");
+          },
+          function () {
+            $(this).removeClass("highlight");
+          }
+        );
+
+        // Console message
+        console.log("jQuery is loaded and ready!");
+        console.log(
+          "Try interacting with the buttons and elements on the page."
+        );
+      });
+    </script>
+  </body>
+</html>
