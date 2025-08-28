@@ -47,3 +47,5 @@ Real-time content addition/removal
 ## Pros: No need to download files, always up-to-date, fast loading from global servers
 
 ## Cons: Requires internet connection, dependency on external service
+
+### Follow the link to the demo page: [Demo Page](https://verson-tech.github.io/jquery-demo/)
